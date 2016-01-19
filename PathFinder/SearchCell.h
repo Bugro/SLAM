@@ -21,9 +21,10 @@ public:
 	void SetYcoord(int);
 	int GetId()const; 
 	void SetId(int);
-	bool GetWalkable()const;
+	bool GetWalkable(int id)const;
 	void SetWalkable(bool);
 	float GetF();
+
 	float ManhattanDistance(SearchCell *);
 
 	SearchCell *parent;

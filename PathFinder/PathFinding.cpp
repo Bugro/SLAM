@@ -3,8 +3,6 @@
 #include "PathFinding.h"
 #include "RobotBase.h"
 
-#define X_SIZE_SCREEN 600
-#define Y_SIZE_SCREEN 400
 
 PathFinding::PathFinding(void)
 {
@@ -16,7 +14,6 @@ PathFinding::~PathFinding(void)
 {
 
 }
-
 
 void PathFinding::SetStartGoal(SearchCell start, SearchCell goal)
 {
@@ -103,17 +100,21 @@ SearchCell* PathFinding::GetNextCell()
 
 void PathFinding::PathOpened(int x, int y, float newCost, SearchCell *parent)
 {
-	//if(CELL_BLOCKED)
-	//{
-	//	return;
-	//}
+	int id = y * WORLD_SIZE + x;
+
+	if(!GetWalkable(id))
+	{
+		return;
+	}
+
 	/*
 	if (((x * CELL_SIZE)< 0) || ((x  * CELL_SIZE) > X_SIZE_SCREEN) || ((y  * CELL_SIZE) < 0) || ((y * CELL_SIZE) < X_SIZE_SCREEN))
 	{
 		return ;
 	}
 	*/
-	int id = y * WORLD_SIZE + x;
+
+
 	for (unsigned int i = 0; i < m_visitedList.size(); i++)
 	{
 		if (id == m_visitedList[i]->GetId())

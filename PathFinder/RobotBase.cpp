@@ -16,6 +16,8 @@
 #include "PathFinding.h"
 #include <iostream>
 #include <math.h>
+#include <vector>
+
 
 #define PI 3.14159
 
@@ -29,6 +31,27 @@ using namespace std;
 * Constructor
 */
 
+
+int main(int argc, char* args[])
+{
+	//Create Process
+
+	std::cout << " ************** Robot Simulation ************** " << std::endl << std::endl << std::endl;
+	Vector2 newPosition = Vector2(20,20);
+	Vector2 targetPos = Vector2(100, 270);
+
+	RobotBase robot = RobotBase();
+	robot.setPosition(newPosition);
+
+	std::cout << " Position de depart: " << newPosition.GetX() << " " << newPosition.GetY() << std::endl;
+	std::cout << " Position de d'arrivee: " << targetPos.GetX() << " " << targetPos.GetY() << std::endl << std::endl;
+
+	robot.PathFinder(robot.getPosition(), targetPos);
+	/*
+	robot.moveTo(targetPos);
+	*/
+	getchar();
+}
 
 RobotBase::RobotBase(void)
 {
@@ -83,22 +106,73 @@ void RobotBase::robotDisplay()
 
 }
 */
+
+void RobotBase::PathFinder(Vector2 currentPos, Vector2 targetPos){
+
+	PathFinding path = PathFinding();
+
+	m_pathToGoalRobot = path.FindPath(targetPos, currentPos);
+
+	std::cout << " ************** Path Find ************** " << std::endl << std::endl;
+
+	for (unsigned int i = 0; i < m_pathToGoalRobot.size(); i++)
+	{
+		std::cout << " " << m_pathToGoalRobot[i]->GetX() << " " << m_pathToGoalRobot[i]->GetY() << std::endl;
+	}
+}
+
 /**
 * Moves the robot in function of the orientation and the speed passed in parameter (manual mode)
 */
-void RobotBase::move(short orientation, short speed, short acceleration) {
+void RobotBase::move(short goalOrientation) {
 
-	debug_printf("move \n");
+	//PWM adaptation
+	if (goalOrientation != 0)
+	{
+		while (!isOriented(goalOrientation))
+		{
+			if (goalOrientation <= 0)
+			{
+				//pwmWrite(1, 700);
+				//pwmWrite(2, 300);
+			}
+			else
+			{
+				//pwmWrite(1, 300);
+				//pwmWrite(2, 700);
+			}
+		}
+	}
+	while (!isArrived())
+	{
+		//Renvoi des commandes moteurs
 
-	computeMotorsCommands(orientation, speed, acceleration);
+		//pwmWrite(1, 700);
+		//pwmWrite(2, 700);
+	}
 }
 
 /**
 * Moves the robot to the position passed in parameter (automatic mode)
 */
 void RobotBase::moveTo(Vector2 destination) {
-	std::cout << "TODO" << std::endl;
+	
+	PathFinding path = PathFinding();
+	int i = 0;
+	short goalOrientation;
 
+	m_pathToGoalRobot = path.FindPath(destination, getPosition());
+
+	while (i != (m_pathToGoalRobot.size()-1))
+	{
+		goalOrientation = computeOrientation(m_pathToGoalRobot[i]->GetVector(), m_pathToGoalRobot[i + 1]->GetVector());
+
+		m_destination.SetX(m_pathToGoalRobot[i]->GetX());
+		m_destination.SetY(m_pathToGoalRobot[i]->GetY());
+
+		move(goalOrientation);
+		i++;
+	}
 }
 
 /**
@@ -161,7 +235,8 @@ void RobotBase::computeMotorsCommands(short orientationError, short speed, short
 float RobotBase::computeOrientation(Vector2 Position1, Vector2 Position2) {
 	if (Position1.GetX() != Position2.GetX() || Position1.GetY() != Position2.GetY())
 	{
-		float angle = (float)rad2deg(atan2(Position2.GetX() - Position1.GetY(), Position2.GetX() - Position1.GetY()));
+		float angle = 90 - ((float)rad2deg(atan2(Position2.GetX() - Position1.GetX(), Position2.GetY() - Position1.GetY())));
+		
 		if (angle > 180.0)
 			angle -= 360.0;
 		else if (angle < -180.0)
@@ -190,6 +265,15 @@ bool RobotBase::isArrived(void){
 	}
 }
 
+bool RobotBase::isOriented(short goalOrientation){
+	if (getOrientation() == goalOrientation){
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
 float rad2deg(float rad){
 	return (float)(180.0 * rad / PI);

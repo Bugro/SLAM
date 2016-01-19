@@ -5,6 +5,12 @@
 Vector2::Vector2() : m_x(0), m_y(0) {}
 Vector2::Vector2(int x, int y) : m_x(x), m_y(y) {}
 
+Vector2 Vector2::GetVector()
+{
+	Vector2 temp = Vector2(m_x, m_y);
+	return temp;
+}
+
 int Vector2::GetX() const
 { 
 	return m_x; 

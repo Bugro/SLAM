@@ -22,10 +22,18 @@ void SearchCell::SetXcoord(int x) { m_xcoord = x; }
 void SearchCell::SetYcoord(int y) { m_ycoord = y; }
 int SearchCell::GetId()const { return m_id; }
 void SearchCell::SetId(int id) { m_id = id; }
-bool SearchCell::GetWalkable()const { return m_walkable; }
+bool SearchCell::GetWalkable(int id)const { 
+
+	while (id != m_id){
+
+		id++;
+	}
+	return m_walkable; 
+}
 void SearchCell::SetWalkable(bool walkable) { m_walkable = walkable; }
 
 float SearchCell::GetF(){ return G + H; }
+
 
 float SearchCell::ManhattanDistance(SearchCell *nodeEnd)
 {

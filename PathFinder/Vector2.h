@@ -14,6 +14,7 @@ public:
 	void SetX(int x);
 	void SetY(int y);
 
+	Vector2 GetVector();
 	int Length();
 
 private:

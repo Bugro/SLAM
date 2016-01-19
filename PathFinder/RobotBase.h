@@ -11,6 +11,8 @@
 #include "Vector2.h"
 #include "SearchCell.h"
 
+#include <vector>
+
 #define ACCURACY 1
 
 #define CMD_MIN 0
@@ -50,7 +52,7 @@ public:
 	* @post
 	*
 	*/
-	void move(short orientation, short speed, short acceleration);
+	void move(short orientation);
 
 	/**
 	*
@@ -62,8 +64,9 @@ public:
 	* @post
 	*
 	*/
+	
 	void moveTo(Vector2 destination);
-
+	
 	/**
 	*
 	* @fn void stop()
@@ -85,7 +88,6 @@ public:
 	*/
 	void emergencyStop();
 
-
 	/**
 	*
 	* @fn int getStatus()
@@ -97,7 +99,6 @@ public:
 	*
 	*/
 	int getStatus();
-
 
 	/**
 	*
@@ -111,7 +112,6 @@ public:
 	*/
 	int getBatteryLevel();
 
-
 	/**
 	*
 	* @fn void informBatteryEmpty()
@@ -123,7 +123,6 @@ public:
 	*/
 	void informBatteryEmpty();
 
-
 	/**
 	*
 	* @fn bool isArrived()
@@ -134,6 +133,12 @@ public:
 	* @return True if the robot is arrived, else False
 	*/
 	bool isArrived();
+
+	bool isOriented(short goalOrientation);
+
+	void PathFinder(Vector2 currentPos, Vector2 targetPos);
+
+	std::vector <Vector2*> m_pathToGoalRobot;
 
 private:
 	/**
@@ -150,8 +155,7 @@ private:
 	* The robot orientation (between -180 and +180)
 	*/
 	short m_orientation;
-
-
+	
 	/**
 	*
 	* @fn void computeMotorsCommands(short orientationError, short speed)
