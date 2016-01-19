@@ -13,7 +13,7 @@ public:
 	PathFinding(void);
 	~PathFinding(void);
 
-	void FindPath(Vector2 currentPos, Vector2 targetPos);
+	std::vector <Vector2*> FindPath(Vector2 currentPos, Vector2 targetPos);
 	Vector2 NextPathPos();
 
 	void ClearOpenList();

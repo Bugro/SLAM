@@ -6,24 +6,6 @@
 #define X_SIZE_SCREEN 600
 #define Y_SIZE_SCREEN 400
 
-int main(int argc, char* args[])
-{
-	//Create Process
-
-	PathFinding path = PathFinding();
-	Vector2 currentPos = Vector2(20, 200);
-	Vector2 targetPos = Vector2(100, 270);
-
-	std::cout << " " << currentPos.GetX() << " " << currentPos.GetY() << std::endl;
-	std::cout << " " << targetPos.GetX() << " " << targetPos.GetY() << std::endl;
-	std::cout << std::endl;
-
-	path.FindPath(currentPos, targetPos);
-	path.PathDisplay();
-
-	getchar();
-}
-
 PathFinding::PathFinding(void)
 {
 	m_initializedStartGoal = false;
@@ -48,7 +30,7 @@ void PathFinding::SetStartGoal(SearchCell start, SearchCell goal)
 	m_openList.push_back(m_startCell);
 }
 
-void PathFinding::FindPath(Vector2 currentPos, Vector2 targetPos)
+std::vector <Vector2*> PathFinding::FindPath(Vector2 currentPos, Vector2 targetPos)
 {
 	if (!m_initializedStartGoal)
 	{
@@ -90,6 +72,8 @@ void PathFinding::FindPath(Vector2 currentPos, Vector2 targetPos)
 	{
 		ContinuePath();
 	}
+
+	return m_pathToGoal;
 }
 
 SearchCell* PathFinding::GetNextCell()
