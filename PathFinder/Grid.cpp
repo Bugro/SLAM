@@ -10,7 +10,7 @@ Grid::Grid()
 	nodeDiameter = nodeRadius * 2;
 	gridSizeX = (int)(gridWorldSize.GetX() / nodeDiameter);
 	gridSizeY = (int)(gridWorldSize.GetY() / nodeDiameter);
-	
+
 	// Set up sizes. (HEIGHT x WIDTH)
 	grid.resize(gridWorldSize.GetX());
 	for (int i = 0; i < gridSizeX; ++i){
@@ -50,6 +50,18 @@ SearchCell* Grid::CellFromGrid(Vector2 point)
 	int y = (int)((point.GetY() / CELL_SIZE));
 
 	return grid[x][y];
+}
+
+Vector2 Grid::PosGrid(Vector2 point)
+{
+	int x = (int)((point.GetX() / CELL_SIZE));
+	std::cout << point.GetX() << std::endl;
+	std::cout << x << std::endl;
+
+	int y = (int)((point.GetY() / CELL_SIZE));
+
+    Vector2 v2 = Vector2(x,y);
+	return v2;
 }
 
 void Grid::EraseCell(Vector2 point)

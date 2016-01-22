@@ -12,7 +12,7 @@ class Grid
 	float nodeDiameter;
 	int iGridX, iGridY;
 
-	std::vector<std::vector<SearchCell*>> grid;
+	std::vector<std::vector<SearchCell*> > grid;
 
 public:
 	Grid();
@@ -24,6 +24,7 @@ public:
 	SearchCell* CellFromGrid(Vector2 point);
 	void DisplayGrid();
 	void EraseCell(Vector2 point);
+	Vector2 PosGrid(Vector2 point);
 
 private:
 

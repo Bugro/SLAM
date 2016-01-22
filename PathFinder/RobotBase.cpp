@@ -46,7 +46,6 @@ int main(int argc, char* args[])
 
 	robot.PathFinder(robot.getPosition(), targetPos);
 
-	getchar();
 }
 
 RobotBase::RobotBase(void)
@@ -58,7 +57,7 @@ RobotBase::RobotBase(void)
 	m_orientation = 0;
 }
 
-RobotBase::RobotBase(Vector2 position, Vector2 destination, short orientation) 
+RobotBase::RobotBase(Vector2 position, Vector2 destination, short orientation)
 {
 	m_position.SetX(position.GetX());
 	m_position.SetY(position.GetY());
@@ -153,7 +152,7 @@ void RobotBase::move(short goalOrientation) {
 * Moves the robot to the position passed in parameter (automatic mode)
 */
 void RobotBase::moveTo(Vector2 destination) {
-	
+
 	PathFinding path = PathFinding();
 	int i = 0;
 	short goalOrientation;
@@ -216,7 +215,7 @@ void RobotBase::informBatteryEmpty() {
 */
 void RobotBase::computeMotorsCommands(short orientationError, short speed, short acceleration) {
 
-	debug_printf("computeMotorsCommands cmdMax \n");
+	//debug_printf("computeMotorsCommands cmdMax \n");
 
 	//PWM adaptation
 
@@ -233,7 +232,7 @@ float RobotBase::computeOrientation(Vector2 Position1, Vector2 Position2) {
 	if (Position1.GetX() != Position2.GetX() || Position1.GetY() != Position2.GetY())
 	{
 		float angle = 90 - ((float)rad2deg(atan2(Position2.GetX() - Position1.GetX(), Position2.GetY() - Position1.GetY())));
-		
+
 		if (angle > 180.0)
 			angle -= 360.0;
 		else if (angle < -180.0)

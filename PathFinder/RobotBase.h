@@ -6,7 +6,6 @@
 #ifndef _ROBOTBASE_H
 #define _ROBOTBASE_H
 
-#include "Declaration.h"
 #include "PathFinding.h"
 #include "Vector2.h"
 #include "SearchCell.h"
@@ -65,9 +64,9 @@ public:
 	* @post
 	*
 	*/
-	
+
 	void moveTo(Vector2 destination);
-	
+
 	/**
 	*
 	* @fn void stop()
@@ -156,7 +155,7 @@ private:
 	* The robot orientation (between -180 and +180)
 	*/
 	short m_orientation;
-	
+
 	/**
 	*
 	* @fn void computeMotorsCommands(short orientationError, short speed)
