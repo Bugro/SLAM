@@ -1,0 +1,8 @@
+Papy
+	- Récupérer les infos des codeurs	
+Léo
+	- Se former à ROS
+	- Trouver comment faire du SLAM sous ROS
+Guillaume
+	- Installer Ubuntu et ROS
+	- Comprendre ROS et le travail de Léo
