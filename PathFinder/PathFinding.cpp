@@ -24,6 +24,9 @@ void PathFinding::SetStartGoal(SearchCell start, SearchCell goal)
 	m_startCell->H = m_startCell->ManhattanDistance(m_goalCell);
 	m_startCell->parent = 0;
 
+	//Vector2 v2 = Vector2(20,20);
+	//map.CellFromGrid(v2)->SetWalkable(0);
+
 	m_openList.push_back(m_startCell);
 }
 
@@ -138,7 +141,7 @@ void PathFinding::PathOpened(float x, float y, float newCost, SearchCell *parent
 			}
 		}
 	}
-	
+
 	m_openList.push_back(newChild);
 }
 
@@ -162,7 +165,7 @@ void PathFinding::ContinuePath()
 			for (getPath = m_goalCell; getPath != NULL; getPath = getPath->parent)
 			{
 				m_pathToGoal.push_back(new Vector2((getPath->GetXcoord()), (getPath->GetYcoord())));
-				m_pathToGoalGrid.push_back(map.CellFromGrid(Vector2((getPath->GetXcoord()), (getPath->GetYcoord()))));
+				m_pathToGoalGridVect.push_back(map.PosGrid(Vector2((getPath->GetXcoord()), (getPath->GetYcoord()))));
 			}
 			m_foundGoal = true;
 		}
@@ -226,11 +229,11 @@ void PathFinding::PathDisplay()
 {
 	if (m_pathToGoal.empty())
 	{
-		std::cout << "Path Not Find" << std::endl;
+		std::cout << "Path Not Found" << std::endl;
 	}
 	else
 	{
-		std::cout << "Path Find" << std::endl << std::endl;
+		std::cout << "Path Found" << std::endl << std::endl;
 
 		for (unsigned int i = 0; i < m_pathToGoal.size(); i++)
 		{
@@ -239,9 +242,9 @@ void PathFinding::PathDisplay()
 
 		std::cout << std::endl << std::endl;
 
-		for (unsigned int i = 0; i < m_pathToGoalGrid.size(); i++)
+		for (unsigned int i = 0; i < m_pathToGoalGridVect.size(); i++)
 		{
-			std::cout << " " << m_pathToGoalGrid[i]->GetXcoord() << " " << m_pathToGoalGrid[i]->GetYcoord() << std::endl;
+			std::cout << " " << m_pathToGoalGridVect[i].GetX() << " " << m_pathToGoalGridVect[i].GetY() << std::endl;
 		}
 		map.DisplayGrid();
 	}

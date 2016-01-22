@@ -40,6 +40,7 @@ private:
 	std::vector <SearchCell*> m_visitedList;
 	std::vector <Vector2*> m_pathToGoal;
 	std::vector <SearchCell*> m_pathToGoalGrid;
+	std::vector <Vector2> m_pathToGoalGridVect;
 	Grid grid;
 
 };
