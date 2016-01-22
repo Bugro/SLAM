@@ -37,26 +37,22 @@ int main(int argc, char* args[])
 	//Create Process
 
 	std::cout << " ************** Robot Simulation ************** " << std::endl << std::endl << std::endl;
-	Vector2 newPosition = Vector2(20,20);
-	Vector2 targetPos = Vector2(100, 270);
 
+	Vector2 targetPos = Vector2(400,500);
 	RobotBase robot = RobotBase();
-	robot.setPosition(newPosition);
 
-	std::cout << " Position de depart: " << newPosition.GetX() << " " << newPosition.GetY() << std::endl;
+	std::cout << " Position de depart: " << robot.getPosition().GetX() << " " << robot.getPosition().GetY() << std::endl;
 	std::cout << " Position de d'arrivee: " << targetPos.GetX() << " " << targetPos.GetY() << std::endl << std::endl;
 
 	robot.PathFinder(robot.getPosition(), targetPos);
-	/*
-	robot.moveTo(targetPos);
-	*/
+
 	getchar();
 }
 
 RobotBase::RobotBase(void)
 {
-	m_position.SetX(0);
-	m_position.SetY(0);
+	m_position.SetX(WORLD_SIZE_X / 2);
+	m_position.SetY(WORLD_SIZE_Y / 2);
 	m_destination.SetX(0);
 	m_destination.SetY(0);
 	m_orientation = 0;
@@ -72,9 +68,7 @@ RobotBase::RobotBase(Vector2 position, Vector2 destination, short orientation)
 }
 
 RobotBase::~RobotBase(void)
-{
-}
-
+{}
 
 /**
 *	Getter and setter
@@ -115,10 +109,13 @@ void RobotBase::PathFinder(Vector2 currentPos, Vector2 targetPos){
 
 	std::cout << " ************** Path Find ************** " << std::endl << std::endl;
 
+	path.PathDisplay();
+	/*
 	for (unsigned int i = 0; i < m_pathToGoalRobot.size(); i++)
 	{
 		std::cout << " " << m_pathToGoalRobot[i]->GetX() << " " << m_pathToGoalRobot[i]->GetY() << std::endl;
 	}
+	*/
 }
 
 /**
@@ -245,7 +242,7 @@ float RobotBase::computeOrientation(Vector2 Position1, Vector2 Position2) {
 	}
 	else
 	{	//Les points sont confondus, orientation impossible à calculer
-		return -1;
+		return -1.0;
 	}
 }
 

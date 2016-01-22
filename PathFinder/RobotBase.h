@@ -10,6 +10,7 @@
 #include "PathFinding.h"
 #include "Vector2.h"
 #include "SearchCell.h"
+#include "Grid.h"
 
 #include <vector>
 
@@ -182,6 +183,7 @@ private:
 	*
 	*/
 	float computeOrientation(Vector2 Position1, Vector2 Position2);
+
 };
 
 float rad2deg(float rad);

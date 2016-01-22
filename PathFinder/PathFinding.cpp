@@ -17,8 +17,8 @@ PathFinding::~PathFinding(void)
 
 void PathFinding::SetStartGoal(SearchCell start, SearchCell goal)
 {
-	m_startCell = new SearchCell((int)start.GetXcoord(), (int)start.GetYcoord(), NULL);
-	m_goalCell = new SearchCell((int)goal.GetXcoord(), (int)goal.GetYcoord(), &goal);
+	m_startCell = new SearchCell(start.GetXcoord(), start.GetYcoord(), NULL);
+	m_goalCell = new SearchCell(goal.GetXcoord(), goal.GetYcoord(), &goal);
 
 	m_startCell->G = 0;
 	m_startCell->H = m_startCell->ManhattanDistance(m_goalCell);
@@ -98,23 +98,16 @@ SearchCell* PathFinding::GetNextCell()
 	return nextCell;
 }
 
-void PathFinding::PathOpened(int x, int y, float newCost, SearchCell *parent)
+void PathFinding::PathOpened(float x, float y, float newCost, SearchCell *parent)
 {
-	int id = y * WORLD_SIZE + x;
-
-	if(!GetWalkable(id))
+	int id = (int)(y * (WORLD_SIZE_X/CELL_DIAG_SIZE) + x);
+	/*
+	Vector2 temp = Vector2(x, y);
+	if(map.CellFromGrid(temp)->GetWalkable())
 	{
 		return;
 	}
-
-	/*
-	if (((x * CELL_SIZE)< 0) || ((x  * CELL_SIZE) > X_SIZE_SCREEN) || ((y  * CELL_SIZE) < 0) || ((y * CELL_SIZE) < X_SIZE_SCREEN))
-	{
-		return ;
-	}
 	*/
-
-
 	for (unsigned int i = 0; i < m_visitedList.size(); i++)
 	{
 		if (id == m_visitedList[i]->GetId())
@@ -151,16 +144,12 @@ void PathFinding::PathOpened(int x, int y, float newCost, SearchCell *parent)
 
 void PathFinding::ContinuePath()
 {
-	//int tmpOut = 0;
-	//for (unsigned int i = 0; i < 1000; i++)
 	while (!m_foundGoal)
 	{
 		if (m_openList.empty())
 		{
 			return;
 		}
-
-		//tmpOut++;
 
 		SearchCell* currentCell = GetNextCell();
 
@@ -172,28 +161,29 @@ void PathFinding::ContinuePath()
 
 			for (getPath = m_goalCell; getPath != NULL; getPath = getPath->parent)
 			{
-				m_pathToGoal.push_back(new Vector2((int)(getPath->GetXcoord()), (int)(getPath->GetYcoord())));//*CELL_SIZED
+				m_pathToGoal.push_back(new Vector2((getPath->GetXcoord()), (getPath->GetYcoord())));
+				m_pathToGoalGrid.push_back(map.CellFromGrid(Vector2((getPath->GetXcoord()), (getPath->GetYcoord()))));
 			}
 			m_foundGoal = true;
 		}
 		else
 		{
 			//Right Cell
-			PathOpened((int)currentCell->GetXcoord() + CELL_SIZE, (int)currentCell->GetYcoord(), currentCell->G + CELL_SIZE, currentCell);
+			PathOpened(currentCell->GetXcoord() + CELL_SIZE, currentCell->GetYcoord(), currentCell->G + CELL_SIZE, currentCell);
 			//Left Cell
-			PathOpened((int)currentCell->GetXcoord() - CELL_SIZE, (int)currentCell->GetYcoord(), currentCell->G + CELL_SIZE, currentCell);
+			PathOpened(currentCell->GetXcoord() - CELL_SIZE, currentCell->GetYcoord(), currentCell->G + CELL_SIZE, currentCell);
 			//Up Cell
-			PathOpened((int)currentCell->GetXcoord(), (int)currentCell->GetYcoord() + CELL_SIZE, currentCell->G + CELL_SIZE, currentCell);
+			PathOpened(currentCell->GetXcoord(), currentCell->GetYcoord() + CELL_SIZE, currentCell->G + CELL_SIZE, currentCell);
 			//Down Cell
-			PathOpened((int)currentCell->GetXcoord(), (int)currentCell->GetYcoord() - CELL_SIZE, currentCell->G + CELL_SIZE, currentCell);
+			PathOpened(currentCell->GetXcoord(), currentCell->GetYcoord() - CELL_SIZE, currentCell->G + CELL_SIZE, currentCell);
 			//Left-up Diagonal Cell
-			PathOpened((int)currentCell->GetXcoord() - CELL_SIZE, (int)currentCell->GetYcoord() + CELL_SIZE, currentCell->G + CELL_DIAG_SIZE, currentCell);
+			PathOpened(currentCell->GetXcoord() - CELL_SIZE, currentCell->GetYcoord() + CELL_SIZE, currentCell->G + CELL_DIAG_SIZE, currentCell);
 			//Right-up Cell
-			PathOpened((int)currentCell->GetXcoord() + CELL_SIZE, (int)currentCell->GetYcoord() + CELL_SIZE, currentCell->G + CELL_DIAG_SIZE, currentCell);
+			PathOpened(currentCell->GetXcoord() + CELL_SIZE, currentCell->GetYcoord() + CELL_SIZE, currentCell->G + CELL_DIAG_SIZE, currentCell);
 			//Left-down Diagonal Cell
-			PathOpened((int)currentCell->GetXcoord() - CELL_SIZE, (int)currentCell->GetYcoord() - CELL_SIZE, currentCell->G + CELL_DIAG_SIZE, currentCell);
+			PathOpened(currentCell->GetXcoord() - CELL_SIZE, currentCell->GetYcoord() - CELL_SIZE, currentCell->G + CELL_DIAG_SIZE, currentCell);
 			//Right-down Diagonal Cell
-			PathOpened((int)currentCell->GetXcoord() + CELL_SIZE, (int)currentCell->GetYcoord() - CELL_SIZE, currentCell->G + CELL_DIAG_SIZE, currentCell);
+			PathOpened(currentCell->GetXcoord() + CELL_SIZE, currentCell->GetYcoord() - CELL_SIZE, currentCell->G + CELL_DIAG_SIZE, currentCell);
 
 			for (unsigned int j = 0; j < m_openList.size(); j++)
 			{
@@ -234,32 +224,6 @@ void PathFinding::ClearPathToGoal() { m_pathToGoal.clear(); }
 
 void PathFinding::PathDisplay()
 {
-	/*
-	if (m_openList.empty())
-	{
-
-	}
-	else
-	{
-		for (unsigned int i = 0; i < m_openList.size(); i++)
-		{
-
-		}
-	}
-
-	if (m_visitedList.empty())
-	{
-
-	}
-	else
-	{
-		for (unsigned int i = 0; i < m_visitedList.size(); i++)
-		{
-
-		}
-	}
-	*/
-
 	if (m_pathToGoal.empty())
 	{
 		std::cout << "Path Not Find" << std::endl;
@@ -272,13 +236,13 @@ void PathFinding::PathDisplay()
 		{
 			std::cout << " " << m_pathToGoal[i]->GetX() << " " << m_pathToGoal[i]->GetY() << std::endl;
 		}
+
+		std::cout << std::endl << std::endl;
+
+		for (unsigned int i = 0; i < m_pathToGoalGrid.size(); i++)
+		{
+			std::cout << " " << m_pathToGoalGrid[i]->GetXcoord() << " " << m_pathToGoalGrid[i]->GetYcoord() << std::endl;
+		}
+		map.DisplayGrid();
 	}
-
-	/*
-
-	if (!m_foundGoal)
-	{
-
-	}
-	*/
 }

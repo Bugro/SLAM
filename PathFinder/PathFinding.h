@@ -1,10 +1,12 @@
 #ifndef _PATHFINDING_H
 #define _PATHFINDING_H
 
+
 #include <vector>
 #include <math.h>
 #include "Vector2.h"
 #include "SearchCell.h"
+#include "Grid.h"
 
 class PathFinding
 {
@@ -21,10 +23,11 @@ public:
 	void ClearPathToGoal();
 	void PathDisplay();
 	void SetStartGoal(SearchCell start, SearchCell goal);
-	void PathOpened(int x, int y, float newCost, SearchCell *parent);
+	void PathOpened(float x, float y, float newCost, SearchCell *parent);
 
 	bool m_initializedStartGoal;
 	bool m_foundGoal;
+	Grid map = Grid();
 
 private:
 
@@ -36,6 +39,8 @@ private:
 	std::vector <SearchCell*> m_openList;
 	std::vector <SearchCell*> m_visitedList;
 	std::vector <Vector2*> m_pathToGoal;
+	std::vector <SearchCell*> m_pathToGoalGrid;
+	Grid grid;
 
 };
 

@@ -7,19 +7,19 @@ class Vector2{
 
 public:
 	Vector2();
-	Vector2(int x, int y);
+	Vector2(float x, float y);
 	
-	int GetX()const;
-	int GetY()const;
-	void SetX(int x);
-	void SetY(int y);
+	float GetX()const;
+	float GetY()const;
+	void SetX(float x);
+	void SetY(float y);
 
 	Vector2 GetVector();
-	int Length();
+	float Length();
 
 private:
-	int m_x;
-	int m_y;
+	float m_x;
+	float m_y;
 
 };
 
