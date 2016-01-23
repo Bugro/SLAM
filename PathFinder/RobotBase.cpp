@@ -1,3 +1,4 @@
+
 /**
 *
 * @file RobotBase.cpp
@@ -13,11 +14,6 @@
 */
 
 #include "RobotBase.h"
-#include "PathFinding.h"
-#include <iostream>
-#include <math.h>
-#include <vector>
-
 
 #define PI 3.14159
 
@@ -27,26 +23,7 @@ using namespace std;
 * Robot implementation
 */
 
-/**
-* Constructor
-*/
-
-
-int main(int argc, char* args[])
-{
-	//Create Process
-
-	std::cout << " ************** Robot Simulation ************** " << std::endl << std::endl << std::endl;
-
-	Vector2 targetPos = Vector2(400,500);
-	RobotBase robot = RobotBase();
-
-	std::cout << " Position de depart: " << robot.getPosition().GetX() << " " << robot.getPosition().GetY() << std::endl;
-	std::cout << " Position de d'arrivee: " << targetPos.GetX() << " " << targetPos.GetY() << std::endl << std::endl;
-
-	robot.PathFinder(robot.getPosition(), targetPos);
-
-}
+/* Constructor */
 
 RobotBase::RobotBase(void)
 {
@@ -87,18 +64,7 @@ short RobotBase::getOrientation() const{
 void RobotBase::setOrientation(short newOrientation){
 	m_orientation = newOrientation;
 }
-/*
-void RobotBase::robotDisplay()
-{
-	SDL_Rect robot;
-	robot.x = m_position.GetX() - 10;
-	robot.y = m_position.GetY() - 10;
-	robot.w = m_position.GetX() + 10;
-	robot.h = m_position.GetY() + 10;
 
-
-}
-*/
 
 void RobotBase::PathFinder(Vector2 currentPos, Vector2 targetPos){
 
@@ -109,12 +75,6 @@ void RobotBase::PathFinder(Vector2 currentPos, Vector2 targetPos){
 	std::cout << " ************** Path Find ************** " << std::endl << std::endl;
 
 	path.PathDisplay();
-	/*
-	for (unsigned int i = 0; i < m_pathToGoalRobot.size(); i++)
-	{
-		std::cout << " " << m_pathToGoalRobot[i]->GetX() << " " << m_pathToGoalRobot[i]->GetY() << std::endl;
-	}
-	*/
 }
 
 /**

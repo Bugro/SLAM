@@ -1,5 +1,21 @@
 
+/**
+*
+* @file SearchCell.cpp
+* @brief SearchCell class implementation
+* @author J. CHAUDET
+* @date 01 January 2016
+*
+* @section Copyright
+*
+* This document is confidential and the property of CentraleSupelec.
+* It can't be distributed without the prior consent of its owner.
+*
+*/
+
 #include "SearchCell.h"
+
+/* Constructor */
 
 SearchCell::SearchCell() : parent(0){}
 SearchCell::SearchCell(float x, float y, SearchCell *_parent)

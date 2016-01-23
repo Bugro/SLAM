@@ -1,6 +1,8 @@
+
 #ifndef _VECTOR2_H
 #define _VECTOR2_H
 
+#include "LibGlobale.h"
 #include <math.h>
 
 class Vector2{

@@ -1,12 +1,9 @@
+
 #ifndef _SEARCHCELL_H
 #define _SEARCHCELL_H
 
+#include "LibGlobale.h"
 #include <math.h>
-
-#define WORLD_SIZE_X 1000
-#define WORLD_SIZE_Y 1000
-#define CELL_SIZE 10
-#define CELL_DIAG_SIZE 14.1421
 
 class SearchCell{
 

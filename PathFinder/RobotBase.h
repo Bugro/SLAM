@@ -2,7 +2,6 @@
 * Project SLAM_Project
 */
 
-
 #ifndef _ROBOTBASE_H
 #define _ROBOTBASE_H
 
@@ -11,13 +10,10 @@
 #include "SearchCell.h"
 #include "Grid.h"
 
+#include "LibGlobale.h"
+#include <iostream>
+#include <math.h>
 #include <vector>
-
-#define ACCURACY 1
-
-#define CMD_MIN 0
-#define CMD_MAX 255
-
 
 // The robot state machien class
 class RobotBase{

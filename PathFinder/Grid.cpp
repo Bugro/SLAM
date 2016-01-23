@@ -1,5 +1,21 @@
+
+/**
+*
+* @file Grid.cpp
+* @brief Grid class implementation
+* @author J. CHAUDET
+* @date 01 January 2016
+*
+* @section Copyright
+*
+* This document is confidential and the property of CentraleSupelec.
+* It can't be distributed without the prior consent of its owner.
+*
+*/
+
 #include "Grid.h"
-#include <iostream>
+
+/* Constructor */
 
 Grid::Grid()
 {
@@ -44,9 +60,6 @@ Grid::~Grid()
 SearchCell* Grid::CellFromGrid(Vector2 point)
 {
 	int x = (int)((point.GetX() / CELL_SIZE));
-	std::cout << point.GetX() << std::endl;
-	std::cout << x << std::endl;
-
 	int y = (int)((point.GetY() / CELL_SIZE));
 
 	return grid[x][y];
@@ -55,13 +68,9 @@ SearchCell* Grid::CellFromGrid(Vector2 point)
 Vector2 Grid::PosGrid(Vector2 point)
 {
 	int x = (int)((point.GetX() / CELL_SIZE));
-	std::cout << point.GetX() << std::endl;
-	std::cout << x << std::endl;
-
 	int y = (int)((point.GetY() / CELL_SIZE));
 
-    Vector2 v2 = Vector2(x,y);
-	return v2;
+	return Vector2(x, y);
 }
 
 void Grid::EraseCell(Vector2 point)

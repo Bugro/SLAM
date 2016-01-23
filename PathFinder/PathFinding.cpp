@@ -1,8 +1,21 @@
 
-#include <iostream>
-#include "PathFinding.h"
-#include "RobotBase.h"
+/**
+*
+* @file PathFinding.cpp
+* @brief PathFinding class implementation
+* @author J. CHAUDET
+* @date 01 January 2016
+*
+* @section Copyright
+*
+* This document is confidential and the property of CentraleSupelec.
+* It can't be distributed without the prior consent of its owner.
+*
+*/
 
+#include "PathFinding.h"
+
+/* Constructor */
 
 PathFinding::PathFinding(void)
 {
@@ -23,9 +36,6 @@ void PathFinding::SetStartGoal(SearchCell start, SearchCell goal)
 	m_startCell->G = 0;
 	m_startCell->H = m_startCell->ManhattanDistance(m_goalCell);
 	m_startCell->parent = 0;
-
-	//Vector2 v2 = Vector2(20,20);
-	//map.CellFromGrid(v2)->SetWalkable(0);
 
 	m_openList.push_back(m_startCell);
 }
@@ -103,7 +113,7 @@ SearchCell* PathFinding::GetNextCell()
 
 void PathFinding::PathOpened(float x, float y, float newCost, SearchCell *parent)
 {
-	int id = (int)(y * (WORLD_SIZE_X/CELL_DIAG_SIZE) + x);
+	int id = (int)(y * (WORLD_SIZE_X/CELL_SIZE) + x);
 	/*
 	Vector2 temp = Vector2(x, y);
 	if(map.CellFromGrid(temp)->GetWalkable())
@@ -199,28 +209,6 @@ void PathFinding::ContinuePath()
 	}
 }
 
-/*
-Vector2 PathFinding::NextPathPos()
-{
-	int index = 1;
-
-	Vector2 nextPos;
-	nextPos.m_x = m_pathToGoal[m_pathToGoal.size() - index]->m_x + (CELL_SIZE / 2);
-	nextPos.m_y = m_pathToGoal[m_pathToGoal.size() - index]->m_y + (CELL_SIZE / 2);
-
-	Vector2 distance = nextPos - pos;
-
-	if (index < m_pathToGoal.size())
-	{
-		if (distance.Length() < radius)
-		{
-			m_pathToGoal.erase(m_pathToGoal.end() - index);
-		}
-	}
-	return nextPos;
-}
-*/
-
 void PathFinding::ClearOpenList() { m_openList.clear(); }
 void PathFinding::ClearVisitedList() { m_visitedList.clear(); }
 void PathFinding::ClearPathToGoal() { m_pathToGoal.clear(); }
@@ -237,15 +225,17 @@ void PathFinding::PathDisplay()
 
 		for (unsigned int i = 0; i < m_pathToGoal.size(); i++)
 		{
-			std::cout << " " << m_pathToGoal[i]->GetX() << " " << m_pathToGoal[i]->GetY() << std::endl;
+			//std::cout << " " << m_pathToGoal[i]->GetX() << " " << m_pathToGoal[i]->GetY() << std::endl;
+			map.CellFromGrid(Vector2(m_pathToGoal[i]->GetX(), m_pathToGoal[i]->GetY()))->SetWalkable(false);
 		}
-
+		
 		std::cout << std::endl << std::endl;
-
+		/*
 		for (unsigned int i = 0; i < m_pathToGoalGridVect.size(); i++)
 		{
-			std::cout << " " << m_pathToGoalGridVect[i].GetX() << " " << m_pathToGoalGridVect[i].GetY() << std::endl;
+			std::cout << " " << m_pathToGoalGridVect[i].GetX() << " " << m_pathToGoalGridVect[i].GetY() << std::endl;	
 		}
+		*/
 		map.DisplayGrid();
 	}
 }

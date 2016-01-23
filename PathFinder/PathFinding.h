@@ -1,12 +1,15 @@
+
 #ifndef _PATHFINDING_H
 #define _PATHFINDING_H
 
-
-#include <vector>
-#include <math.h>
 #include "Vector2.h"
 #include "SearchCell.h"
 #include "Grid.h"
+
+#include "LibGlobale.h"
+#include <iostream>
+#include <vector>
+#include <math.h>
 
 class PathFinding
 {

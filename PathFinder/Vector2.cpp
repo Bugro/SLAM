@@ -1,8 +1,24 @@
 
-#include <math.h>
+/**
+*
+* @file Vector2.cpp
+* @brief Vector2 class implementation
+* @author J. CHAUDET
+* @date 01 January 2016
+*
+* @section Copyright
+*
+* This document is confidential and the property of CentraleSupelec.
+* It can't be distributed without the prior consent of its owner.
+*
+*/
+
 #include "Vector2.h"
 
+/* Constructor */
+
 Vector2::Vector2() : m_x(0), m_y(0) {}
+
 Vector2::Vector2(float x, float y) : m_x(x), m_y(y) {}
 
 Vector2 Vector2::GetVector()

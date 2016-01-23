@@ -1,9 +1,13 @@
+
 #ifndef _GRID_H
 #define _GRID_H
 
 #include "SearchCell.h"
 #include "Vector2.h"
+
+#include "LibGlobale.h"
 #include <vector>
+#include <iostream>
 
 class Grid
 {
@@ -29,4 +33,4 @@ public:
 private:
 
 };
-#endif //_SEARCHCELL_H
+#endif //_GRID_H
