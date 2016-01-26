@@ -10,8 +10,21 @@
 #include <math.h>
 #include <vector>
 
+#include <signal.h>
+#include <stdio.h>
+#include <string.h>
+//#include <sys/time.h>
+//#include <wiringPi.h>
+
+void timer_handler(int signum);
+void myRightCounterIT(void);
+void myRightCounterIT(void);
+
 int main(int argc, char* args[])
 {
+	// initGPIO();
+	// initTimer();
+
 	//Create Process
 
 	std::cout << " ************** Robot Simulation ************** " << std::endl << std::endl << std::endl;

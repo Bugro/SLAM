@@ -89,13 +89,13 @@ void RobotBase::move(short goalOrientation) {
 		{
 			if (goalOrientation <= 0)
 			{
-				//pwmWrite(1, 700);
-				//pwmWrite(2, 300);
+				//pwmWrite(LEFT_PWM, 700);
+				//pwmWrite(RIGHT_PWM, 300);
 			}
 			else
 			{
-				//pwmWrite(1, 300);
-				//pwmWrite(2, 700);
+				//pwmWrite(LEFT_PWM, 300);
+				//pwmWrite(RIGHT_PWM, 700);
 			}
 		}
 	}
@@ -103,8 +103,8 @@ void RobotBase::move(short goalOrientation) {
 	{
 		//Renvoi des commandes moteurs
 
-		//pwmWrite(1, 700);
-		//pwmWrite(2, 700);
+		//pwmWrite(LEFT_PWM, 700);
+		//pwmWrite(RIGHT_PWM 700);
 	}
 }
 
@@ -136,8 +136,8 @@ void RobotBase::moveTo(Vector2 destination) {
 */
 void RobotBase::stop() {
 
-	//pwmWrite(1, 500);
-	//pwmWrite(2, 500);
+	//pwmWrite(LEFT_PWM 500);
+	//pwmWrite(RIGHT_PWM, 500);
 }
 
 /**
@@ -145,8 +145,8 @@ void RobotBase::stop() {
 */
 void RobotBase::emergencyStop() {
 
-	//pwmWrite(1, 500);
-	//pwmWrite(2, 500);
+	//pwmWrite(LEFT_PWM, 500);
+	//pwmWrite(RIGHT_PWM, 500);
 }
 
 /**
@@ -181,8 +181,8 @@ void RobotBase::computeMotorsCommands(short orientationError, short speed, short
 
 	//Renvoi des commandes moteurs
 
-	//pwmWrite(1, speed);
-	//pwmWrite(2, speed);
+	//pwmWrite(LEFT_PWM, speed);
+	//pwmWrite(RIGHT_PWM, speed);
 }
 
 /**
