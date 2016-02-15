@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "slam")
+set(slam_MAINTAINER "Leo Statkus <leo@statkus.fr>")
+set(slam_DEPRECATED "")
+set(slam_VERSION "0.0.1")
+set(slam_BUILD_DEPENDS "rtabmap_ros")
+set(slam_RUN_DEPENDS "rtabmap_ros")
+set(slam_BUILDTOOL_DEPENDS "catkin")

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>slam</name>
+  <version>0.0.1</version>
+  <description>The slam package</description>
+
+  <maintainer email="leo@statkus.fr">Leo Statkus</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://github.com/Bugro/SLAM</url>
+
+  <author email="leo@statkus.fr">Leo Statkus</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rtabmap_ros</build_depend>
+  <run_depend>rtabmap_ros</run_depend>
+
+  <export>
+  </export>
+</package>

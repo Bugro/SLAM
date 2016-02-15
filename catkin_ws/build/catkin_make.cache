@@ -1,0 +1,2 @@
+slam
+-DCATKIN_DEVEL_PREFIX=/home/leo/workspace/SLAM_projet_supelec/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/leo/workspace/SLAM_projet_supelec/catkin_ws/install -G Unix Makefiles
