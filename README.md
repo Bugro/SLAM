@@ -7,3 +7,5 @@ Installation du driver kinect sur le raspberry pi 2 : http://www.mariolukas.de/2
 
 Installation recommandée pour ROS :
 Ubuntu 14.04 avec ROS Jade.
+
+Le projet ROS se trouve dans le dossier catkin_ws. Il utilise un workspace catkin et contient un package (slam).
