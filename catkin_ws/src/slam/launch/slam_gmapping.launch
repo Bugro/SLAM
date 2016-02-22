@@ -1,0 +1,23 @@
+<launch>
+
+  <!-- Include the openni lauche file -->
+  <include file="$(find openni_launch)/launch/openni.launch">
+    <arg name="depth_registration" value="true" />
+  </include>
+
+  
+  <!-- Kinect cloud to laser scan -->
+  <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+    <remap from="image"     to="/camera/depth_registered/image_raw"/>
+    <remap from="camera_info" to="/camera/depth_registered/camera_info"/>
+    <remap from="scan" to="/kinect_scan"/>
+    <param name="range_max" type="double" value="4"/>
+  </node>
+
+
+  <!-- gmapping -->
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+    <param name="scan" type="sensor_msgs/LaserScan" value="/kinect_scan"/>
+  </node>
+
+</launch>
