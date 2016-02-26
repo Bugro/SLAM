@@ -90,7 +90,7 @@ signal.signal(signal.SIGALRM, timer_handler)
 signal.alarm(5)
 
 io.add_event_detect(LEFT_IT, io.FALLING, callback=myLeftCounterIT)
-io.add_event_detect(RIGHT_IT, io.FALLING, callback= myRightCounterIT)
+io.add_event_detect(RIGHT_IT, io.FALLING, callback=myRightCounterIT)
 	
 	
 # Main Program
