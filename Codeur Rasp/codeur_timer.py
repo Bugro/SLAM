@@ -1,8 +1,6 @@
 
-import socket
-import datetime
 import time
-import signal, os
+import threading
 import RPi.GPIO as io
 io.setmode(io.BCM)
 io.setwarnings(False)
@@ -24,15 +22,32 @@ RIGHT_IT = 16
 RIGHT_A = 20
 RIGHT_B = 21
 
-def timer_handler(signum, frame):
+class MyTimer: 
+    def __init__(self, tempo, target, args= [], kwargs={}): 
+        self._target = target 
+        self._args = args 
+        self._kwargs = kwargs 
+        self._tempo = tempo 
+  
+    def _run(self): 
+        self._timer = threading.Timer(self._tempo, self._run) 
+        self._timer.start() 
+        self._target(*self._args, **self._kwargs) 
+  
+    def start(self): 
+        self._timer = threading.Timer(self._tempo, self._run) 
+        self._timer.start() 
+  
+    def stop(self): 
+        self._timer.cancel() 
+
+def timer_handler():
 	
 	global tmp
 	global tmp1
 	global tmp2
 	global eventLeftCounter
 	global eventRightCounter
-	
-	print "Signal handler called with signal", signum
 
 	tmp1 = eventLeftCounter
 	tmp2 = eventRightCounter
@@ -70,12 +85,12 @@ def myRightCounterIT(RIGHT_IT):
 io.setup(LEFT_PWM, io.OUT)
 pwm_left = io.PWM(LEFT_PWM, 4000)
 pwm_left.ChangeFrequency(20000)
-pwm_left.start(50)
+pwm_left.start(70)
 
 io.setup(RIGHT_PWM, io.OUT)
 pwm_right = io.PWM(RIGHT_PWM, 4000)
 pwm_right.ChangeFrequency(20000)
-pwm_right.start(50)
+pwm_right.start(70)
 
 io.setup(LEFT_A, io.IN, pull_up_down=io.PUD_DOWN)
 io.setup(LEFT_B, io.IN, pull_up_down=io.PUD_DOWN)
@@ -84,7 +99,6 @@ io.setup(RIGHT_B, io.IN, pull_up_down=io.PUD_DOWN)
 
 
 # Set the signal handler and a 5-second alarm
-signal.signal(signal.SIGALRM, timer_handler)
 
 io.add_event_detect(LEFT_IT, io.FALLING, callback=myLeftCounterIT)
 io.add_event_detect(RIGHT_IT, io.FALLING, callback= myRightCounterIT)
@@ -93,6 +107,9 @@ io.add_event_detect(RIGHT_IT, io.FALLING, callback= myRightCounterIT)
 # Main Program
 
 try:
+	a = MyTimer(0.05, timer_handler) 
+	a.start() 
+
 	while(True):
 		if(tmp):
 			tmp = False;
