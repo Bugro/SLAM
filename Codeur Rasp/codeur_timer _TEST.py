@@ -24,7 +24,7 @@ RIGHT_IT = 16
 RIGHT_A = 20
 RIGHT_B = 21
 
-def timer_handler(signum, frame):
+def timer_handler():
 	
 	global tmp
 	global tmp1
@@ -83,8 +83,10 @@ io.setup(RIGHT_A, io.IN, pull_up_down=io.PUD_DOWN)
 io.setup(RIGHT_B, io.IN, pull_up_down=io.PUD_DOWN)
 
 
-# Set the signal handler and a 5-second alarm
-signal.signal(signal.SIGALRM, timer_handler)
+# Set timer_handler
+
+t = Timer(0.05, timer_handler)
+t.start() # after 50 milliseconds
 
 io.add_event_detect(LEFT_IT, io.FALLING, callback=myLeftCounterIT)
 io.add_event_detect(RIGHT_IT, io.FALLING, callback= myRightCounterIT)
