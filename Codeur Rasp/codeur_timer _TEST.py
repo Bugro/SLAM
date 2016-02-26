@@ -31,8 +31,6 @@ def timer_handler():
 	global tmp2
 	global eventLeftCounter
 	global eventRightCounter
-	
-	print "Signal handler called with signal", signum
 
 	tmp1 = eventLeftCounter
 	tmp2 = eventRightCounter
