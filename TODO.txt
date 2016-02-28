@@ -1,9 +1,8 @@
 Papy
-	- Récupérer les infos des codeurs
-	- Comparer le nombre d'impulsion détecter via les interruptions et via l'oscilloscope
-	- Implémenter la mise à jour de la position du robot via les interruptions des codeurs
-	- Implémenter une interruptions toutes les 10 ms ? pour relever le nombre d'incrément 
-	  acquis t mettre à jour le robot	
+	- Implémenter la mise à jour de la position du robot via les interruptions des codeurs Sur le PC
+	- Tester le programme Python de la récupération des codeurs via le PC
+	- Faire un nouveau PCB sur KiCad
+	- Continuer à se former à ROS		
 Léo
 	- Se former à ROS
 	- Trouver comment faire du SLAM sous ROS
