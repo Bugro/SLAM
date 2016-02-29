@@ -9,7 +9,7 @@ import socket
 
 s = socket.socket()
 host = '' #Symbolic name meaning all available interfaces
-port = 1300
+port = 1000
 s.bind((host, port))
 
 s.listen(5)
@@ -18,18 +18,11 @@ while True:
     c, addr = s.accept()
     print ('Got connection from',addr)
     c.send('Thanks for connecting\n')
+
     try:
         while True:
-            cmd = str(raw_input())
-	    #cmd = msvcrt.getche() #Commande pour Windows permettant de ne pas appuyer sur Enter
-            if cmd == 'z':
-                c.send("R=100L=100")              
-            elif cmd == 'd':
-                c.send("R=0L=100")
-            elif cmd == 'q':
-                c.send("R=100L=0")
-            elif cmd == 's':
-                c.send("R=50L=50")
+		print c.recv(1024)
     except:
         print("No connexion from client")
         c.close()
+	s.close()

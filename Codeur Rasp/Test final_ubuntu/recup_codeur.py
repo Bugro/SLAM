@@ -97,45 +97,28 @@ def myRightCounterIT(RIGHT_IT):
 	        eventRightCounter - 1
 
 
-
-# Set the socket with server
-s = socket.socket()
-host = '10.42.0.1'# ip of bugro's PC
-port = 1100
-
-try:
-    s.connect((host,port))
-
-except:
-    print("Unable to connect to server.\nCheck if IP address is correct and your firewall")
-
 # Set the signal handler and a 5-second alarm
 
 io.add_event_detect(LEFT_IT, io.FALLING, callback=myLeftCounterIT)
 io.add_event_detect(RIGHT_IT, io.FALLING, callback=myRightCounterIT)
 
-a = MyTimer(0.05, timer_handler)
-
-
 
 # Main Program
 
 try:
-        print(str(s.recv(1024)))
+	a = MyTimer(0.05, timer_handler)
 	a.start()
 
         while True:
 		pass
 
-            else:
-                print "Command was lost"
 except:
 
         io.cleanup()            # clean up GPIO on CTRL+C exit
 	a.stop()
         print("\nEnd of Program\n")
         print("\nYou've been disconnected")
-        s.close()
+
 
 
 

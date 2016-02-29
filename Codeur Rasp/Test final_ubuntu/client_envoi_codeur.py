@@ -101,11 +101,10 @@ def myRightCounterIT(RIGHT_IT):
 # Set the socket with server
 s = socket.socket()
 host = '10.42.0.1'# ip of bugro's PC
-port = 1100
+port = 1300
 
 try:
     s.connect((host,port))
-
 except:
     print("Unable to connect to server.\nCheck if IP address is correct and your firewall")
 
@@ -114,14 +113,13 @@ except:
 io.add_event_detect(LEFT_IT, io.FALLING, callback=myLeftCounterIT)
 io.add_event_detect(RIGHT_IT, io.FALLING, callback=myRightCounterIT)
 
-a = MyTimer(0.05, timer_handler)
-
 
 
 # Main Program
 
 try:
         print(str(s.recv(1024)))
+	a = MyTimer(0.05, timer_handler)
 	a.start()
 
         while True:
