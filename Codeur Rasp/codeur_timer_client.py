@@ -1,8 +1,7 @@
 
 import socket
-import datetime
+import threading
 import time
-import signal, os
 import RPi.GPIO as io
 io.setmode(io.BCM)
 io.setwarnings(False)
@@ -21,7 +20,27 @@ RIGHT_IT = 16
 RIGHT_A = 20
 RIGHT_B = 21
 
-def timer_handler(signum, frame):
+class MyTimer: 
+
+    def __init__(self, tempo, target, args= [], kwargs={}): 
+        self._target = target 
+        self._args = args 
+        self._kwargs = kwargs 
+        self._tempo = tempo 
+  
+    def _run(self): 
+        self._timer = threading.Timer(self._tempo, self._run) 
+        self._timer.start() 
+        self._target(*self._args, **self._kwargs) 
+  
+    def start(self): 
+        self._timer = threading.Timer(self._tempo, self._run) 
+        self._timer.start() 
+  
+    def stop(self): 
+        self._timer.cancel() 
+
+def timer_handler():
 	
 	global eventLeftCounter
 	global eventRightCounter
@@ -77,7 +96,7 @@ io.setup(RIGHT_B, io.IN, pull_up_down=io.PUD_DOWN)
 # Set the socket with server
 s = socket.socket()
 host = '169.254.21.120'# ip of bugro's PC
-port = 1100
+port = 1300
 
 try:
     s.connect((host,port))
@@ -86,11 +105,9 @@ except:
 
 
 # Set the signal handler and a 5-second alarm
-signal.signal(signal.SIGALRM, timer_handler)
-signal.alarm(5)
 
 io.add_event_detect(LEFT_IT, io.FALLING, callback=myLeftCounterIT)
-io.add_event_detect(RIGHT_IT, io.FALLING, callback= myRightCounterIT)
+io.add_event_detect(RIGHT_IT, io.FALLING, callback=myRightCounterIT)
 	
 	
 # Main Program
@@ -98,17 +115,20 @@ try:
 	print s.recv(1024)
 	s.sendall("OK")
 
+	a = MyTimer(0.05, timer_handler) 
+	a.start() 
+
 	while True:
 		data =  int(s.recv(1024))
 		pwm_left.ChangeDutyCycle(float(data))
 		pwm_right.ChangeDutyCycle(float(data))
-		time.sleep(1)
 
 except:
 	pwm_left.stop()         # stop the white PWM output
 	pwm_right.stop()        # stop the red PWM output
 	io.cleanup()            # clean up GPIO on CTRL+C exit
-	print("\nEnd of Program")
+	print("\nEnd of Program\n")
 	print("\nYou've been disconnected")
+	a.stop()
 	s.close()
 
