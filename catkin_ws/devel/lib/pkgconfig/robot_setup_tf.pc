@@ -1,0 +1,8 @@
+prefix=/home/leo/workspace/SLAM_projet_supelec/catkin_ws/devel
+
+Name: robot_setup_tf
+Description: Description of robot_setup_tf
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/leo/workspace/SLAM_projet_supelec/catkin_ws/devel/lib 
+Requires: 
