@@ -1,7 +1,34 @@
 const int pwmRight = 9;
 const int pwmLeft = 10;
 const int enable = 2;
+const int codLeftA = 18;
+const int codLeftB = 19;
+const int codRightA = 20;
+const int codRightB = 21;
 int rCounter = 0;
+
+int valL = 0;
+int valR = 0;
+
+unsigned long beginTime = 0;
+const unsigned long endTime = 50;
+
+
+void leftInterrupt()
+{
+  if (digitalRead(codLeftB))
+    valL++;
+  else
+    valL--;
+}
+
+void rightInterrupt()
+{
+  if (digitalRead(codRightB))
+    valR--;
+  else
+    valR++;
+}
 
 void setup()
 {
@@ -10,8 +37,15 @@ void setup()
   pinMode(pwmRight, OUTPUT);
   pinMode(pwmLeft, OUTPUT);
   pinMode(enable, OUTPUT);
+  pinMode(codLeftA, INPUT);
+  pinMode(codLeftB, INPUT);
+  pinMode(codRightA, INPUT);
+  pinMode(codRightB, INPUT);
   
   digitalWrite(enable,LOW);
+
+  attachInterrupt(digitalPinToInterrupt(codLeftA), leftInterrupt, RISING);
+  attachInterrupt(digitalPinToInterrupt(codRightA), rightInterrupt, RISING);
 
   Serial.begin(9600);
 
@@ -20,11 +54,22 @@ void setup()
 
 void loop()
 {
+  beginTime = millis();
+
+  
+  //Envoie des codeurs
+  Serial.println (250);
+  Serial.println (251);
+  Serial.println (valR);
+  Serial.println (valL);
+  valR = 0;
+  valL = 0;
+
+
+  //Réception des pwm
   char cmd = 0;
   int right = 125;
   int left = 125;
-  
-  while (Serial.available() == 0);
 
   while (Serial.available() > 0) {
 
@@ -72,5 +117,8 @@ void loop()
       break;
     }
   }
+  
+  while(millis() - beginTime < endTime);
+  
   //delay(10);
 }
