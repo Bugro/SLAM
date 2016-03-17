@@ -7,35 +7,32 @@ const int codRightA = 20;
 const int codRightB = 21;
 int rCounter = 0;
 
-volatile boolean moveL;
-volatile boolean upL;
-volatile boolean moveR;
-volatile boolean upR;
-
 int valL = 0;
 int valR = 0;
 
+unsigned long beginTime = 0;
+const unsigned long endTime = 50;
+
+
 void leftInterrupt()
 {
-  if (digitalRead(codLeftA))
-    upL = digitalRead(codLeftB));
-  else 
-    upL = digitalRead(codLeftB);
-  moveL = true;
+  if (digitalRead(codLeftB))
+    valL++;
+  else
+    valL--;
 }
 
 void rightInterrupt()
 {
-  if (digitalRead(codRightA))
-    upR = digitalRead(codRightB));
-  else 
-    upR = digitalRead(codRightB);
-  moveR = true;
+  if (digitalRead(codRightB))
+    valR--;
+  else
+    valR++;
 }
 
 void setup()
 {
-  TCCR1B = (TCCR1B & 0b11111000) | 0x01;
+  TCCR2B = (TCCR2B & 0b11111000) | 0x01;
   
   pinMode(pwmRight, OUTPUT);
   pinMode(pwmLeft, OUTPUT);
@@ -47,8 +44,8 @@ void setup()
   
   digitalWrite(enable,LOW);
 
-  attachInterrupt(0, leftInterrupt, FALLING);
-  attachInterrupt(1, rightInterrupt, FALLING);
+  attachInterrupt(digitalPinToInterrupt(codLeftA), leftInterrupt, RISING);
+  attachInterrupt(digitalPinToInterrupt(codRightA), rightInterrupt, RISING);
 
   Serial.begin(9600);
 
@@ -57,24 +54,19 @@ void setup()
 
 void loop()
 {
-  if (moveL)  {
-    if (upL)
-      valL++;
-    else
-      valL--;
-    moveL= false;         
-    Serial.println (valL);
-  }
+  beginTime = millis();
 
-  if (moveR)  {
-    if (upR)
-      valR++;
-    else
-      valR--;
-    moveR= false;         
-    Serial.println (valR);
-  }
   
+  //Envoie des codeurs
+  Serial.println (250);
+  Serial.println (251);
+  Serial.println (valR);
+  Serial.println (valL);
+  valR = 0;
+  valL = 0;
+
+
+  //Réception des pwm
   char cmd = 0;
   int right = 125;
   int left = 125;
@@ -125,5 +117,8 @@ void loop()
       break;
     }
   }
+  
+  while(millis() - beginTime < endTime);
+  
   //delay(10);
 }
