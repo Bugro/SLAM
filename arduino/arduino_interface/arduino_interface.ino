@@ -1,7 +1,37 @@
 const int pwmRight = 9;
 const int pwmLeft = 10;
 const int enable = 2;
+const int codLeftA = 18;
+const int codLeftB = 19;
+const int codRightA = 20;
+const int codRightB = 21;
 int rCounter = 0;
+
+volatile boolean moveL;
+volatile boolean upL;
+volatile boolean moveR;
+volatile boolean upR;
+
+int valL = 0;
+int valR = 0;
+
+void leftInterrupt()
+{
+  if (digitalRead(codLeftA))
+    upL = digitalRead(codLeftB));
+  else 
+    upL = digitalRead(codLeftB);
+  moveL = true;
+}
+
+void rightInterrupt()
+{
+  if (digitalRead(codRightA))
+    upR = digitalRead(codRightB));
+  else 
+    upR = digitalRead(codRightB);
+  moveR = true;
+}
 
 void setup()
 {
@@ -10,8 +40,15 @@ void setup()
   pinMode(pwmRight, OUTPUT);
   pinMode(pwmLeft, OUTPUT);
   pinMode(enable, OUTPUT);
+  pinMode(codLeftA, INPUT);
+  pinMode(codLeftB, INPUT);
+  pinMode(codRightA, INPUT);
+  pinMode(codRightB, INPUT);
   
   digitalWrite(enable,LOW);
+
+  attachInterrupt(0, leftInterrupt, FALLING);
+  attachInterrupt(1, rightInterrupt, FALLING);
 
   Serial.begin(9600);
 
@@ -20,11 +57,27 @@ void setup()
 
 void loop()
 {
+  if (moveL)  {
+    if (upL)
+      valL++;
+    else
+      valL--;
+    moveL= false;         
+    Serial.println (valL);
+  }
+
+  if (moveR)  {
+    if (upR)
+      valR++;
+    else
+      valR--;
+    moveR= false;         
+    Serial.println (valR);
+  }
+  
   char cmd = 0;
   int right = 125;
   int left = 125;
-  
-  while (Serial.available() == 0);
 
   while (Serial.available() > 0) {
 
