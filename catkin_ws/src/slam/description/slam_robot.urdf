@@ -1,0 +1,51 @@
+<robot name="slam_robot">
+
+  <!-- Base link -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="0.4 0.3 0.15"/>
+      </geometry>
+      <material name="red">
+        <color rgba="0.8 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Right Wheel -->
+  <link name="r_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570795 0 0" />
+      <geometry>
+          <cylinder length="0.05" radius="0.1" />
+      </geometry>
+      <material name="black">
+        <color rgba="0.05 0.05 0.05 1"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="joint_r_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="r_wheel"/>
+    <origin xyz="0 -0.175 0" rpy="0 0 0" /> 
+    <axis xyz="0 1 0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Left Wheel -->
+  <link name="l_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570795 0 0" />
+      <geometry>
+          <cylinder length="0.05" radius="0.1" />
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+  <joint name="joint_l_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="l_wheel"/>
+    <origin xyz="0 0.175 0" rpy="0 0 0" /> 
+    <axis xyz="0 1 0" rpy="0 0 0" />
+  </joint>
+</robot>

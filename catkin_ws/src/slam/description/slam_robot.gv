@@ -1,0 +1,11 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"l_wheel" [label="l_wheel"];
+"r_wheel" [label="r_wheel"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "joint_l_wheel" [label="xyz: 0 0.175 0 \nrpy: 0 -0 0"]
+"joint_l_wheel" -> "l_wheel"
+"base_link" -> "joint_r_wheel" [label="xyz: 0 -0.175 0 \nrpy: 0 -0 0"]
+"joint_r_wheel" -> "r_wheel"
+}

@@ -5,7 +5,7 @@ int rCounter = 0;
 
 void setup()
 {
-  TCCR1B = (TCCR1B & 0b11111000) | 0x01;
+  TCCR2B = (TCCR2B & 0b11111000) | 0x01;
   
   pinMode(pwmRight, OUTPUT);
   pinMode(pwmLeft, OUTPUT);

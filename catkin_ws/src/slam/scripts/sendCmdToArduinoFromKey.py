@@ -5,7 +5,7 @@ import serial
 
 # configure the serial connections (the parameters differs on the device you are connecting to)
 ser = serial.Serial(
-    port='/dev/ttyACM0',
+    port='/dev/ttyACM1',
     baudrate=9600
 )
 
@@ -28,14 +28,14 @@ while 1 :
         left = 0;
 	
         if input == 'z':
-            right = 180
+            right = 177
             left = 177
         elif input == 'd':
-            right = 82
-            left = 167
+            right = 80
+            left = 175
         elif input == 'q':
-            right = 172
-            left = 88
+            right = 175
+            left = 80
         else:
             right = 128
             left = 128
